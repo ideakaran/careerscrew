@@ -1,0 +1,37 @@
+<nav class="navbar">
+  <input class="form-control" type="text" name="firstName" [(ngModel)] = "firstName" (ngModelChange)="Search()" placeholder="Enter First Name" />
+</nav>
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th (click)="sort('id')">User id&nbsp;<i class="fa fa-sort"></i></th>
+        <th (click)="sort('firstName')">First Name&nbsp;<i class="fa fa-sort"></i></th>
+        <th (click)="sort('lastName')"scope="col">Last Name&nbsp;<i class="fa fa-sort"></i></th>
+        <th (click)="sort('id')"scope="col">Email</th>
+        <th (click)="sort('id')"scope="col">Mobile</th>
+        <th (click)="sort('id')"scope="col">Education</th>
+        <th (click)="sort('id')"scope="col">University</th>
+        <th (click)="sort('id')"scope="col">Referer</th>
+        <th (click)="sort('id')"scope="col">Referer Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users | orderBy: key: reverse | paginate: {itemsPerPage:10, currentPage:p};">
+        <td>{{user.id}}</td>
+        <td>{{user.firstName}}</td>
+        <td>{{user.lastName}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.mobile}}</td>
+        <td>{{user.education}}</td>
+        <td>{{user.university}}</td>
+        <td>{{user.referer}}</td>
+        <td>{{user.refererEmail}}</td>
+        <td>
+          <button type="button" class="btn btn-danger" (click)="deleteRow(user.id)">Delete</button> &nbsp;&nbsp;  
+          <button type="button" class="btn btn-primary" (click)="update(user.id)">Update</button> 
+        </td>
+      </tr>
+    </tbody>
+    <pagination-controls (pageChange) = "p = $event"></pagination-controls>
+  </table>
