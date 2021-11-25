@@ -1,0 +1,23 @@
+<div class="row justify-content-end me-5 mb-3">
+  <div class="col-auto">
+    <a class="btn btn-lg cc-button-primary rounded-pill" role="button"
+       [routerLink]="APP_ROUTES.DASH_JOB_DETAILS_NEW"
+       [routerLinkActive]="'active'">New +
+    </a>
+  </div>
+</div>
+
+<app-simple-table *ngIf="jobs && jobs.length > 0"
+                  [title]="'Job Details'"
+                  [dataList]="jobs"
+                  [columns]="JobColumn"
+                  [staticPagination]="true"
+                  [actionTemplate]="{'Update': updateTemplate}">
+</app-simple-table>
+
+<ng-template #updateTemplate let-data>
+  <a class="fs-4 cc-link-primary" (click)="updateJob(data)">
+    <i class="bi bi-pencil-square"></i>
+  </a>
+</ng-template>
+

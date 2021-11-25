@@ -1,0 +1,73 @@
+<div class="mx-auto">
+
+  <div class="w-100 text-center my-2">
+
+    <app-loading *ngIf="isLoading || isPdfLoading"
+                 [repeat]="3" [height]="'2em'" [width]="'2em'">
+    </app-loading>
+
+    <ng-container *ngIf="showPdfErrorMessage()">
+      <div
+        class="alert alert-danger" role="alert">
+        {{fileViewMessage && fileViewMessage.length > 0 ? fileViewMessage : pdfViewErrorMessage}}
+      </div>
+    </ng-container>
+
+  </div>
+
+  <div class="mx-auto">
+
+    <div *ngIf="candidateFile?.id" class="row my-2 g-2 justify-content-center">
+
+      <!--  PDF Actions    -->
+      <ng-container *ngIf="src && (!hasPdfViewError && !isPdfLoading)">
+
+<!--  Disabling Previous and Next Page buttons for now      -->
+<!--        <button type="button" class="col-auto btn btn-primary btn-sm mx-2"-->
+<!--                (click)="previousPage()">Previous page-->
+<!--        </button>-->
+
+<!--        <button type="button" class="col-auto btn btn-primary btn-sm mx-2"-->
+<!--                (click)="nextPage()">Next page-->
+<!--        </button>-->
+
+        <button type="button" class="col-auto btn btn-secondary btn-sm mx-2"
+                (click)="plusZoom()"> Zoom(+)
+        </button>
+
+        <button type="button" class="col-auto btn btn-secondary btn-sm mx-2"
+                (click)="minusZoom()"> Zoom(-)
+        </button>
+
+        <button type="button" class="col-auto btn btn-success btn-sm mx-2"
+                (click)="rotate()">Rotate {{angle}}&#176; </button>
+
+        <button type="button" class="col-auto btn btn-warning btn-sm mx-2"
+                (click)="downloadResource(true)">OpenIn NewTab
+        </button>
+
+      </ng-container>
+
+      <button type="button" class="col-auto btn btn-warning btn-sm mx-2"
+              (click)="downloadResource()"><i class="bi bi-download"></i> Download
+      </button>
+
+    </div>
+
+    <pdf-viewer [src]="src"
+                id="pdf-report-id"
+                [className]="'mx-auto border border-5 rounded'"
+                [show-all]="true"
+                [(page)]="pageVariable"
+                [render-text]="true"
+                [zoom]="zoom"
+                [rotation]="angle"
+                [show-borders]="false"
+                (error)="onErrorFn($event)"
+                [original-size]="false"
+                (after-load-complete)="callBackFn($event)"
+                [ngStyle]="{'width': width, 'height': height}">
+    </pdf-viewer>
+  </div>
+
+</div>

@@ -1,34 +1,31 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { JobDashboardComponent } from './job-dashboard/job-dashboard.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { Ng2OrderModule } from 'ng2-order-pipe';
-import { NgxPaginationModule } from 'ngx-pagination';
-import { FormsModule } from '@angular/forms';
-import { UpdateComponent } from './update/update.component';
+import {AppComponent} from './app.component';
+
+import {AppRoutingModule} from './app-routing.module';
+import {AuthModule} from '@app/auth/auth.module';
+import {CoreModule} from '@app/core/core.module';
+import {SharedModule} from '@app/shared/shared.module';
+import {FeaturesModule} from '@app/features/features.module';
+import {DatePipe} from '@angular/common';
+import {QuillModule} from "ngx-quill";
 
 @NgModule({
   declarations: [
-    AppComponent,
-    JobDashboardComponent,
-    UpdateComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule,
-    HttpClientModule,
-    Ng2SearchPipeModule,
-    Ng2OrderModule,
-    NgxPaginationModule,
-    FormsModule
+    AuthModule,
+    CoreModule,
+    SharedModule,
+    FeaturesModule,
+    QuillModule.forRoot()
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

@@ -1,0 +1,21 @@
+
+<div *ngIf="user" class="details-card">
+  <h1 class="name" style="color: blue">Candidate Details</h1>
+  <h3 class="firstName">{{user.fullName}}</h3>
+  <p class="title">Id: {{user.id}}</p>
+  <p class="title">Email: {{user.email}}</p>
+  <br>
+  <div class="details">
+    <p>Additional Details</p>
+    <p class="phone">Address: {{ 'Kathmandu, Nepal' }}</p>
+  </div>
+
+<!--  <div class="col-md-12 text-center">-->
+<!--    <button type="button" class="btn btn-info" *ngIf="showResume" (click)="onClick()">View Resume</button>-->
+<!--    <button type="button" class="btn btn-info" *ngIf="showResume == false" (click)="onClick()">Hide Resume</button>-->
+<!--  </div>-->
+</div>
+
+<br><br><br>
+
+

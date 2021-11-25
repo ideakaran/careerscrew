@@ -1,0 +1,127 @@
+<div class="my-1">
+  <div class='row'>
+
+    <div class="col-12 col-sm-12 col-md-10 col-lg-8 mx-auto">
+      <div class="border-0 shadow bg-body rounded-3 my-5 p-4">
+
+          <h5 class="text-center fw-bold fs-4 color-primary">Submit your Application</h5>
+          <div *ngIf="jobApplyResponseMessage && jobApplyResponseMessage.length > 0" class="alert"
+               [ngClass]="hasError? 'alert-danger': 'alert-primary' " role="alert">
+            {{jobApplyResponseMessage}}
+          </div>
+          <form [formGroup]="jobApplyForm" (ngSubmit)="onJobApply()">
+            <div class="form-group">
+              <label class="form-label" for="fullName">Full Name: </label>
+              <input type="text" [ngClass]="{ 'is-invalid': isSubmitted && formControls.fullName.errors }"
+                     class="form-control" id="fullName" formControlName="fullName" aria-describedby="emailHelp"
+                     placeholder="Enter Name">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">Email address: </label>
+              <input type="email" [ngClass]="{ 'is-invalid': isSubmitted && formControls.email.errors }"
+                     class="form-control" id="email" aria-describedby="emailHelp" formControlName="email"
+                     placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contactNumber">Contact Number: </label>
+              <input type="text" [ngClass]="{ 'is-invalid': isSubmitted && formControls.contactNumber.errors }"
+                     class="form-control" id="contactNumber" formControlName="contactNumber" placeholder="Phone Number"
+                     maxlength="14">
+            </div>
+
+            <span class="row border-bottom border-1 border-secondary mt-3 mx-2"></span>
+
+            <div class="my-3">
+              <div class="form-check">
+                <label class="form-check-label" for="validCheck3">Is Referred:
+                  <span *ngIf="!formControls.isRefererChecked.value" class="text-muted">Optional</span>
+                  <small *ngIf="formControls.isRefererChecked.value" class="text-muted ps-2">* Referer Full Name and
+                    Email
+                    -
+                    Abc</small>
+                </label>
+                <input class="form-check-input" type="checkbox" formControlName="isRefererChecked" id="validCheck3"
+                       aria-describedby="validCheck3Feedback">
+              </div>
+              <div class="ms-5" *ngIf="formControls.isRefererChecked.value">
+                <div class="row g-3 form-group row align-items-center mt-1 mb-3">
+                  <div class="col-auto">
+                    <label class="col-form-label" for="refererFullName">Referrer Name: </label>
+                  </div>
+                  <div class="col-auto">
+                    <input type="text" class="form-control" id="refererFullName" aria-describedby="emailHelp"
+                           [ngClass]="{ 'is-invalid': isSubmitted && formControls.refererFullName.errors }"
+                           formControlName="refererFullName" placeholder="Enter Referer FullName">
+                  </div>
+                </div>
+                <div class="row g-3 form-group row align-items-center mb-3">
+                  <div class="col-auto">
+                    <label class="col-form-label" for="refererEmail">Referrer Email: </label>
+                  </div>
+                  <div class="col-auto">
+                    <input type="text" class="form-control"
+                           [ngClass]="{ 'is-invalid': formControls.isRefererChecked?.value && isSubmitted && formControls.refererEmail.errors }"
+                           id="refererEmail" aria-describedby="emailHelp" formControlName="refererEmail"
+                           placeholder="Enter Referer Email">
+                  </div>
+
+                  <div *ngIf="formControls.refererEmail.errors?.pattern">
+                    <span class="text-danger">Note: Referer email must be of @abc</span>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="preferredPosition">Preferred Position: </label>
+              <select id="preferredPosition" class="form-select" formControlName="jobId" aria-label="select example"
+                      [ngClass]="{ 'is-invalid': isSubmitted && formControls.jobId.errors }"
+                      required>
+                <option selected value>Select Preferred Job</option>
+                <option *ngFor="let job of jobs"
+                        [ngValue]="job.id">
+                  {{job.title}}
+                </option>
+              </select>
+            </div>
+            <br>
+            <div class="form-group">
+              <label class="form-label" for="exampleFormControlFile1">Resume: </label>
+              <input
+                #resumeFileInputElement
+                [ngClass]="{ 'is-invalid': (isSubmitted && formControls.resumeFile.errors) || (isFileSizeError || isFileFormatError) }"
+                type="file"
+                class="form-control"
+                aria-label="file example"
+                id="exampleFormControlFile1"
+                accept=".doc, .docx,.txt,.pdf"
+                (change)="onChange($event)"
+                required/>
+
+              <ng-container *ngIf="(maxResumeFileSize || allowedFileTypes)">
+                <small class="text-muted">
+                  <span *ngIf="maxResumeFileSize">Files must be less than {{maxResumeFileSize}} MB. </span>
+                  <span *ngIf="allowedFileTypes">Allowed file types: {{allowedFileTypes.join(", ")}}. </span>
+                  <strong>eg: yourname-resume.pdf </strong></small>
+              </ng-container>
+              <br/>
+              <ng-container>
+                <small *ngIf="isFileSizeError" class="text-danger"><span *ngIf="maxResumeFileSize">File Size cannot be more than {{maxResumeFileSize}} MB</span></small>
+                <small *ngIf="isFileFormatError" class="text-danger"><span *ngIf="allowedFileTypes">Allowed file types: {{allowedFileTypes.join(", ")}} </span> </small>
+              </ng-container>
+            </div>
+            <hr>
+            <div class="form-group">
+              <button class="btn cc-button-primary btn-submit col-auto" type="submit" [disabled]="loading">
+                Apply Now
+                <app-loading *ngIf="loading" [repeat]="3"></app-loading>
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+  </div>
+</div>

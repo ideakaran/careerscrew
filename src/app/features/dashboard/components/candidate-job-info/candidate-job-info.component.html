@@ -1,0 +1,84 @@
+<div *ngIf="isUserACandidate">
+
+  <div *ngIf="candidateJob" class="row">
+    <div class="details-card col-12">
+      <h4 class="text-center fw-normal">Application For: {{candidateJob.job?.title}}</h4>
+      <div class="d-flex justify-content-between col-12">
+        <div>
+          <h6>Candidate Name: {{candidateJob.userEntity?.fullName}}</h6>
+          <h6>Applied Date: {{candidateJob.appliedDate | date}}</h6>
+          <h6>Contact No: {{candidateJob.userEntity.contactNumber}}</h6>
+          <h6>Status: <span class="badge" [ngClass]="getStatus(candidateJob.applicationStatus)">
+            {{candidateJob.applicationStatus}}</span></h6>
+        </div>
+
+        <div *ngIf="candidateJob.refererEmail">
+          <h6>Referer: {{candidateJob.refererFullName}}</h6>
+          <h6>Referer Email: {{candidateJob.refererEmail}}</h6>
+          <h6>Referer Approved: {{candidateJob.isVerifiedByReferer}}</h6>
+        </div>
+
+        <app-message-send-reply [candidateJob]="candidateJob"></app-message-send-reply>
+
+      </div>
+
+      <div class="row border border-1 my-3 py-1">
+
+        <!--  Message Block      -->
+        <div class="col-12">
+<!--          <p>Message For Candidate </p>-->
+          <p>{{candidateJob.msgForCandidate}}</p>
+        </div>
+
+        <!--  Assignment Description Block      -->
+        <div class="col-12"  *ngIf="candidateJob.assignment">
+          <h7 class="job_assignment fw-light">Update from HR:</h7>
+<!--          <p>{{candidateJob.msgForCandidate}}</p>-->
+          <div class="job_assignment_desc" [innerHTML]="candidateJob.assignment"></div>
+        </div>
+
+        <!--  Message Solution Block      -->
+        <div class="col-12" *ngIf="candidateJob.assignment">
+          <h7 class="job_assignment fw-light">Assignment Solutions:</h7>
+          <form [formGroup]="solutionForm" (ngSubmit)="onSubmit()">
+            <div formArrayName="solutions">
+              <div *ngIf="!isAdmin">
+                <div class="form-group" *ngFor="let solution of getSolutionControls(); let i = index">
+                  <div class="row">
+                    <div class="col-md-6" style="margin-bottom: 6px">
+                      <input type="text" class="form-control" [formControlName]="i">
+                    </div>
+                    <div class="col-md-4" *ngIf="getSolutionControls().length>1">
+                      <button class="btn btn-danger" (click)="deleteSolution(i)">Delete</button>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-success" [disabled]="solutionForm.invalid">Submit Solution</button>
+<!--                <button class="btn btn-primary" type="button" (click)="addSolution()" style="margin-left: 2px">Next-->
+<!--                  Solution-->
+<!--                </button>-->
+              </div>
+            </div>
+          </form>
+
+          <div class="p-2">
+            <div *ngFor="let gl of candidateJob.githubLinks">
+              <span>{{gl}}</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div>
+      <h4 class="text-center mx-auto">Resume</h4>
+      <app-file-viewer [candidateJobId]="candidateJob.id" [width]="'80%'">
+      </app-file-viewer>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      Interview Information
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{userName}}</h5>
+    </div>
+    <div>
+      <hr>
+      <div *ngIf="candidateInterviews" class="card-body">
+        <app-simple-table 
+                          [dataList]="candidateInterviews"
+                          [columns]="CandidateInterviewColumns"
+                          [actionTemplate]="{'Update': updateTemplate}"
+                          >
+        </app-simple-table>
+      </div>
+      <hr/>
+      <ng-template #updateTemplate let-data>
+        <a (click)="updateInterview(data)" class="edit_row">Edit</a>
+      </ng-template>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="container">
+      <div class="form-group">
+        <label class="form-check-label" for="exampleCheck1">Select Interviewers</label>
+        <ng-select class="ng-select-control min-width-ngselect-md"
+                     [ngModelOptions]="{standalone: true}"
+                     [items]="interviewers"
+                     [clearable]="true"
+                     [searchable]="true"
+                     [bindLabel]="'name'"
+                     [bindValue]="'id'"
+                     [multiple]="true"
+                     [(ngModel)]="selectedInterviewers"
+                     (change)="onMetricChange()">
+          </ng-select>
+      </div>
+<br>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1"
+               [ngModelOptions]="{standalone: true}"
+               [(ngModel)]="showDate"
+               (click)="onClick()">
+        <label class="form-check-label" for="exampleCheck1">Schedule Date</label>
+        <div *ngIf="showDate" class="d-flex">
+          <input id="interviewDate" formControlName="interviewDate" type="date" >
+          <input id="time" formControlName="time" type="time" placeholder="time">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Description</label>
+        <textarea class="form-control" formControlName="description" id="exampleFormControlTextarea1"
+                  rows="3"></textarea>
+      </div>
+
+      <br>
+      <div class="d-flex justify-content-end">
+        <div class="col-md-6 text-center">
+          <button type="button" class="btn btn-danger" (click)="onClear()"> Reset</button>
+        </div>
+        <div class="col-md-6 text-center">
+          <button type="submit" class="btn btn-primary">Schedule</button>
+        </div>
+      </div>
+    </form>
+    <br>
+  </div>
+</div>

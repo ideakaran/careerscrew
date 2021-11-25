@@ -1,0 +1,21 @@
+<h1 style="color: #31126f; text-align: center; padding: 8px">Current Openings</h1>
+
+<div class="row">
+  <div class="col-12 col-sm-12 col-md-10 col-lg-8 mx-auto my-3" *ngIf="jobs?.length>0">
+    <ngb-accordion #acc="ngbAccordion" [activeIds]="activeIds" class="job-accordion" *ngFor="let job of jobs">
+      <ngb-panel id="{{'ac'+job.id}}">
+        <ng-template ngbPanelTitle>
+          <span>{{job.title}}</span>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <span>
+          {{job.description}}
+          </span>
+          <div class="pull-right" style="display: flex">
+          <button class="btn cc-button-active ms-auto text-end" [routerLink]="['apply-job',job.id]" style="color: white">Apply</button>
+          </div>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+</div>

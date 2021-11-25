@@ -1,0 +1,178 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+// @import "~bootstrap/dist/css/bootstrap.css";
+@import '~bootstrap-icons/font/bootstrap-icons.scss';
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.snow.css';
+
+$color-primary: #31126f;
+$color-primary-2: #5c4099;
+$color-active: #ec008c;
+
+
+.color-primary {
+  color: $color-primary;
+}
+.color-active {
+  color: $color-active;
+}
+.cc-button-primary {
+  background-color: $color-primary;
+  color: #e0dede;
+  &:hover {
+    background-color: $color-primary-2;
+    color: #ffffff;
+  }
+}
+
+.cc-button-active {
+  background-color: $color-active;
+  color: #e0dede;
+  &:hover {
+    background-color: #f87ac3;
+    color: #ffffff;
+  }
+}
+
+.cc-link-primary {
+  color: $color-primary;
+  text-decoration: none;
+  cursor: pointer;
+  &:hover {
+    color: $color-active;
+  }
+}
+
+// Top Navigation-bar and Side-bar
+.main-navbar, .dash-sidebar {
+  background-color: $color-primary;
+
+  a {
+    color: #ffffff;
+    &:hover, :active {
+      color: $color-active;
+    }
+
+  }
+}
+.main-navbar {
+  opacity: 0.96;
+}
+
+// For all nav-items links
+li.nav-item a.nav-link {
+  font-weight: 400;
+  padding-bottom: 0.3em;
+
+  &.active {
+    border-bottom: 2px solid $color-active;
+    font-weight: 600;
+    background-color: transparent;
+    i {
+      color: $color-active;
+    }
+  }
+  &:focus {
+    color: #ffffff;
+  }
+}
+
+// User Dropdown
+.user-dropdown {
+
+  .dropdown-menu.show {
+    background-color: $color-primary;
+    border: 1px solid #ffffff;
+
+    .dropdown-divider {
+      border-top: 2px solid #fff;
+    }
+  }
+
+  button {
+    color: #ffffff;
+  }
+}
+
+// All - Extras
+h3 {
+  color: #323d7a;
+
+  &.st-table-title {
+    color: #323d7a;
+  }
+}
+
+.job-accordion {
+  .accordion-item {
+    margin-bottom: 1em;
+    margin-top: 1em;
+
+    .accordion-button:not(.collapsed) {
+      color: #ffffff;
+      background-color: $color-primary;
+    }
+
+    .accordion-button::after {
+      background-color: #e0d6ff;
+      border-radius: 50%;
+    }
+
+    .accordion-header span, {
+      font-weight: normal;
+      letter-spacing: 0.02em;
+    }
+  }
+}
+.faq-accordion, {
+  .accordion-item {
+    margin-bottom: 1em;
+    margin-top: 1em;
+  }
+
+  .accordion-header {
+    box-shadow: 0 1px 2px #4f4949;
+    span {
+      font-weight: normal;
+      color: #ffffff;
+    }
+  }
+
+  .accordion-button:not(.collapsed) {
+    color: #ffffff;
+    background-color: #412a73;
+  }
+
+  .accordion-button.collapsed {
+    color: #ffffff;
+    background-color: #555578;
+  }
+  .accordion-button::after {
+    background-color: #e0d6ff;
+    border-radius: 50%;
+  }
+
+}
+
+
+.form-check-input:checked {
+  background-color: $color-primary;
+  border-color: $color-primary;
+}
+
+.page-item.active .page-link {
+  color: #fff;
+  background-color: $color-active;
+  border-color: $color-active;
+}
+
+
+.ql-container.ql-snow {
+  border: 1px solid #ccc;
+  min-height: 100px;
+}

@@ -1,0 +1,52 @@
+<div *ngIf="responseMessage && responseMessage.length > 0 && alert" class="alert"
+     [ngClass]="hasError? 'alert-primary' : ''" role="alert">
+  {{responseMessage}}
+</div>
+
+<div class="mt-4">
+  <app-simple-table [title]="'Candidate Details'"
+                    [dataList]="candidateJobs"
+                    [columns]="CandidateJobColumn"
+                    [staticPagination]="true"
+                    [actionTemplate]="{'Resume': viewCandidateResume, 'View': viewTemplate, 'Update': updateTemplate}">
+  </app-simple-table>
+</div>
+
+<ng-template #updateTemplate let-data>
+  <a class="fs-4 cc-link-primary" (click)="updateUser(data)">
+    <i class="bi bi-pencil-square"></i>
+  </a>
+</ng-template>
+
+<ng-template #viewTemplate let-data>
+  <a class="fs-4 cc-link-primary" (click)="viewUser(data)">
+    <i class="bi bi-info-circle-fill"></i>
+  </a>
+</ng-template>
+
+<ng-template #viewCandidateResume let-data>
+  <a class="fs-4 cc-link-primary" (click)="openCandidateResumeViewContent(data)">
+    <i class="bi bi-back"></i>
+  </a>
+</ng-template>
+
+
+<!-- Resume View modal here -->
+<ng-template #candidateResumeViewContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title color-primary">Candidate Resume: {{currentCandidateJobData?.userEntity?.fullName}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <app-file-viewer [candidateJobId]="currentCandidateJobData?.id" [width]="'100%'" [height]="'70vh'">
+    </app-file-viewer>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modal.dismiss('Cross click')">close</button>
+  </div>
+
+</ng-template>

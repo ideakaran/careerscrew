@@ -1,0 +1,51 @@
+<div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100 sticky-top">
+
+  <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+    <li class="nav-item my-1" *ngIf="hasAccessToViewRoute(APP_ROUTES.DASHBOARD)">
+      <a [routerLink]="APP_ROUTES.DASHBOARD" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }"
+         class="nav-link align-middle px-0">
+        <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline px-1">Dashboard</span>
+      </a>
+    </li>
+    <li class="nav-item my-1" *ngIf="hasAccessToViewRoute(APP_ROUTES.DASH_USER_DETAILS)">
+      <a [routerLink]="APP_ROUTES.DASH_USER_DETAILS" [routerLinkActive]="'active'"
+         class="nav-link align-middle px-0">
+        <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline px-1">Candidates</span>
+      </a>
+    </li>
+    <li class="nav-item my-1" *ngIf="hasAccessToViewRoute(APP_ROUTES.DASH_JOB_DETAILS)">
+      <a [routerLink]="APP_ROUTES.DASH_JOB_DETAILS" [routerLinkActive]="'active'"
+         class="nav-link align-middle px-0">
+        <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline px-1">Jobs</span>
+      </a>
+    </li>
+  </ul>
+  <hr/>
+
+  <div ngbDropdown class="dropdown text-white user-dropdown">
+
+    <a href="javascript: void(0);"
+       class="d-flex align-items-center link-dark text-decoration-none"
+       id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+      <span
+        class="d-none d-sm-block mx-1 nav-link text-white"><i>{{fullName && fullName.length > 0 ? fullName : 'invalid user' }}</i></span>
+      <button type="button" class="dropdown-toggle btn cc-button-primary text-white border border-3 rounded-pill" ngbDropdownToggle>
+        <i class="bi bi-person-circle"></i>
+      </button>
+    </a>
+
+    <!-- Temporary fix for css "dropdown-menu-end" not working in ngBootstrap [ngStyle]="{'right': '0'}"  -->
+    <ul ngbDropdownMenu class="dropdown-menu text-small shadow dropdown-menu-end"
+        aria-labelledby="dropdownUser2">
+      <li><a class="dropdown-item" [routerLink]="'/dashboard'">Dashboard</a></li>
+      <li><a class="dropdown-item" [routerLink]="'/dashboard/settings'">Settings</a></li>
+      <li>
+        <hr class="dropdown-divider">
+      </li>
+      <li>
+        <button class="dropdown-item user-logout" (click)="logout()">Log out</button>
+      </li>
+    </ul>
+  </div>
+
+</div>

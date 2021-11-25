@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="card">
+      <div class="card-header">
+        Interview Reviews
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{userName}}</h5>
+      </div>
+  <hr>
+      <form [formGroup]="finalReviewForm" (ngSubmit)="onSave()" class="container fw-bold">
+        <div class="d-flex justify-content-around">
+            <div >
+                <label for="knowledge">Knowledge</label>
+                <input type="number"  class="form-control" id="knowledge" formControlName="knowledge"  placeholder="Select" required>
+            </div>
+            <div >
+                <label for="experience">Experience/Projects</label>
+                <input type="number" class="form-control" id="experience" formControlName="personality"  placeholder="Select" required>
+            </div>
+            <div >
+                <label for="training">Training</label>
+                <input type="number" class="form-control" id="training" formControlName="training"  placeholder="Select" required>
+            </div>
+            <div >
+                <label for="communication">Communication</label>
+                <input type="number"  class="form-control" id="communication" formControlName="communication"  placeholder="Select" required>
+            </div>
+            
+        </div>
+        <div class=" d-flex justify-content-around">
+            <div >
+                <label for="tackling">Tackling</label>
+                <input type="number"  class="form-control" id="tackling" formControlName="tackling"  placeholder="Select" required>
+            </div>
+            <div >
+                <label for="writtenTestScore">Written Test Score [50]</label>
+                <input type="number" class="form-control" id="writtenTestScore" formControlName="writtenTestScore"  placeholder="Select" required>
+            </div>
+            <div >
+                <label for="stability">Stability</label>
+                <input type="number" class="form-control" id="stability" formControlName="stability"  placeholder="Select" required>
+            </div>
+            <div >
+                <label for="grace">Grace</label>
+                <input type="number" class="form-control" id="grace" formControlName="grace"  placeholder="Select" required>
+            </div>
+        </div>
+        <br>
+        <div class="d-flex justify-content-center text-center">
+            <div class="col-md-4">
+                <label for="isSuitableForHiring">Is Suitable For Hiring</label>
+                <select class="form-control" formControlName="isSuitableForHiring" >
+                    <option selected disabled value=null >--Select--</option>
+                    <option [value]="true" >YES</option>
+                    <option [value]="false" >NO</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="remarks">Remarks</label>
+            <textarea type="text" class="form-control" id="remarks" formControlName="remarks" placeholder="Final Remark" rows="2"></textarea>
+        </div>
+        <br>
+        <div class="d-flex justify-content-lg-end">
+          <button type="submit" class="btn btn-primary btn-submit col-md-2">Save</button>
+        </div>
+      </form>
+      <br>
+    </div>
+  </div>
+  

@@ -1,0 +1,66 @@
+<div class="container" *ngIf="alert" class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>Success !</strong> Your details have been updated successfully!!
+</div>
+
+<h3 class="text-center">UPDATE JOB</h3>
+
+
+<div *ngIf="job" class="container border border-3 mb-3 p-3 w-50">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+    <!--    <div class="mb-3 form-group">-->
+    <!--      <label for="jobId" class="user">Job Id</label>-->
+    <!--      <input-->
+    <!--        type="text"-->
+    <!--        class="form-control"-->
+    <!--        formControlName="id"-->
+    <!--        id="jobId"-->
+    <!--      />-->
+    <!--    </div>-->
+
+    <div class="mb-3 form-group">
+      <label for="exampleInputEmail1" class="form-label">Job Name</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+             formControlName="title">
+    </div>
+
+    <div class="mb-3 form-group">
+      <label for="exampleInput1" class="form-label">Job Position</label>
+      <select class="form-control" formControlName="position" id="exampleInput1">
+        <option [value]="null">Select Job Position</option>
+        <option *ngFor="let exp of keys" [ngValue]="exp">
+          {{exp}}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-3 form-group">
+      <label class="form-label">Is Active?</label>
+      <input class="form-check-input" style="margin-left: 4%" type="radio" formControlName="isActive"
+             [checked]="job.isActive" [value]="true" id="flexRadioDefault1">
+      <label class="form-check-label" for="flexRadioDefault1">
+        &nbsp;&nbsp;True
+      </label>
+      <input class="form-check-input" style="margin-left: 6.5%" type="radio" formControlName="isActive"
+             [checked]="!job.isActive" [value]="false" id="flexRadioDefault2">
+      <label class="form-check-label" for="flexRadioDefault1">
+        &nbsp;&nbsp;False
+      </label>
+    </div>
+
+
+    <div class="mb-3 form-group">
+      <label for="exampleFormControlTextarea1">Description</label>
+      <textarea class="form-control" formControlName="description" id="exampleFormControlTextarea1"
+                rows="3"></textarea>
+    </div>
+
+    <div class="col-md-12 text-center">
+      <button type="submit" class="btn cc-button-primary">Update</button>
+      <button type="button" class="btn btn-outline-danger" style="margin-left: 6.5%"
+              [routerLink]="APP_ROUTES.DASH_JOB_DETAILS">Cancel
+      </button>
+    </div>
+  </form>
+</div>
+<br>

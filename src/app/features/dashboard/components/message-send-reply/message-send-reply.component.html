@@ -1,0 +1,109 @@
+<ng-container #askQueries>
+  <div class="row">
+    <button class="btn cc-button-primary col-auto ms-auto" type="submit" (click)="openAskQueriesContent()">
+      Ask Queries
+    </button>
+  </div>
+</ng-container>
+
+<ng-template #askQueriesContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title color-primary">Ask Queries:</h4>
+
+    <button class="btn btn-sm cc-button-primary rounded-pill ms-auto" role="button" (click)="isNewClicked = true">New
+      message +
+    </button>
+    <button class="mx-2" type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+  </div>
+  <div class="modal-body">
+    <ng-container *ngTemplateOutlet="queriesViewWrapper"></ng-container>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modal.dismiss('Cross click')">close</button>
+  </div>
+</ng-template>
+
+
+<ng-template #queriesViewWrapper>
+  <div class="mx-auto">
+
+    <div class="text-center">
+      <div *ngIf="responseMessage && responseMessage.length > 0" class="alert"
+           [ngClass]="hasError? 'alert-danger': 'alert-primary' " role="alert">
+        {{responseMessage}}
+      </div>
+    </div>
+
+    <div class="row my-2 justify-content-center">
+
+      <ng-container *ngIf="candidateJobMessageList && candidateJobMessageList.length > 0">
+
+        <ng-container *ngFor="let cm of candidateJobMessageList">
+          <div class="col-12 col-md-12 col-lg-6 border border-2">
+
+            <p class="fw-bold">Initial Message:</p>
+            <div *ngIf="(!cm?.initialMsg > 0 && !cm.sendingUserEntity) else viewInitialMsgTemplate">
+              <quill-editor [style]="{height: '250px'}"
+                            [(ngModel)]="quillInitialMsg"
+                            [ngModelOptions]="{standalone: true}">
+              </quill-editor>
+              <button type="button" class="btn cc-button-primary" (click)="sendMessage(false)" [disabled]="isLoading">
+                Send
+                <app-loading *ngIf="isLoading" [repeat]="3"></app-loading>
+              </button>
+            </div>
+            <ng-template #viewInitialMsgTemplate>
+              <div [innerHTML]="cm.initialMsg"></div>
+            </ng-template>
+
+          </div>
+          <div class="col-12 col-md-12 col-lg-6 border border-2">
+
+            <p class="fw-bold">Reply Message:</p>
+            <div *ngIf="(!cm?.replyMsg > 0 && !cm.replyingUserEntity) else viewReplyMsgTemplate">
+              <ng-container *ngIf="!isCurrentUser(cm.sendingUserEntity) else waitForReplyTemplate">
+                <quill-editor [style]="{height: '250px'}"
+                              [(ngModel)]="quillReplyMsg"
+                              [ngModelOptions]="{standalone: true}">
+                </quill-editor>
+                <button type="button" class="btn cc-button-primary" (click)="replyMessage(cm.id)"
+                        [disabled]="isLoading">Reply
+                  <app-loading *ngIf="isLoading" [repeat]="3"></app-loading>
+                </button>
+              </ng-container>
+              <ng-template #waitForReplyTemplate><p class="fs-3"><i class="bi bi-dash-lg"></i></p></ng-template>
+            </div>
+
+            <ng-template #viewReplyMsgTemplate>
+              <div [innerHTML]="cm.replyMsg"></div>
+            </ng-template>
+
+          </div>
+
+        </ng-container>
+
+      </ng-container>
+
+    </div>
+  </div>
+
+  <hr/>
+
+  <ng-container *ngIf="isNewClicked">
+    <div class="col-12 col-md-12 col-lg-6">
+      <quill-editor [style]="{height: '250px'}"
+                    [(ngModel)]="quillNewInitialMsg"
+                    [ngModelOptions]="{standalone: true}">
+      </quill-editor>
+      <div class="ms-auto">
+        <button type="button" class="btn cc-button-primary m-1" (click)="sendMessage(true)" [disabled]="isLoading">Send
+          <app-loading *ngIf="isLoading" [repeat]="3"></app-loading>
+        </button>
+        <button type="button" class="btn btn-warning m-1" (click)="isNewClicked = false">Cancel</button>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>

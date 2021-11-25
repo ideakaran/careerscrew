@@ -1,0 +1,23 @@
+<ng-container class="container">
+                <!-- <div *ngIf="jobApplyResponseMessage && jobApplyResponseMessage.length > 0" class="alert"
+                    [ngClass]="hasError? 'alert-danger': 'alert-primary' " role="alert">
+                    {{jobApplyResponseMessage}}
+                </div> -->
+                <form [formGroup]="assessmentForm" (ngSubmit)="onSubmit()"  >
+                    <div class="form-group px-4">
+                      <p class="description py-3 px-1">Description For Initial Assessment:</p>
+                      <quill-editor  [style]="assessmentEditorStyle" formControlName="description"></quill-editor>
+                    </div>
+                    <br>
+                    <div  class="form-group">
+                        <button class="btn btn-primary btn-submit col-md-2" type="submit" [disabled]="">
+                            Send
+                            <app-loading *ngIf="" [repeat]="3"></app-loading>
+                        </button>
+                    </div>
+                </form>
+
+
+
+
+</ng-container>

@@ -1,8 +1,13 @@
 // This file can be replaced during build by using the `fileReplacements` array.
-// `ng build` replaces `environment.ts` with `environment.prod.ts`.
+// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  apiUrl: 'http://localhost:8080',
+  appBrandName: 'CareersCrew',
+  maxResumeFileSize: 2, // file size, Input in MB
+  allowedFileTypes: ['.pdf', '.doc', '.docx'],
+  referrerEmailPattern: '^[A-Za-z0-9._%+-]+@abc.com$',
   production: false
 };
 
@@ -13,4 +18,4 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+// import 'zone.js/dist/zone-error';  // Included with Angular CLI.

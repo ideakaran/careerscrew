@@ -1,0 +1,115 @@
+<h2 class="name" style="color: blue">Update</h2>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse fw-bold" id="navbarSupportedContent">
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link" role="button" [class.active]="tabNumber === 1" (click)="onTabChange(1)">Candidate
+            Details</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" role="button" [class.active]="tabNumber === 2" (click)="onTabChange(2)">Initial
+            Assessment</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" role="button" [class.active]="tabNumber === 3" (click)="onTabChange(3)">Schedule
+            Interview</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" role="button" [class.active]="tabNumber === 4" (click)="onTabChange(4)">Final Review</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+<div class="container text-center">
+  <div *ngIf="responseMessage && responseMessage.length > 0" class="alert"
+       [ngClass]="hasError? 'alert-danger': 'alert-primary' " role="alert">
+    {{responseMessage}}
+  </div>
+</div>
+
+
+<div *ngIf="candidateUser">
+
+  <div *ngIf="tabNumber === 1 ">
+
+    <div class="col-auto">
+      <div class="row justify-content-end me-5">
+        <div class="col-auto">
+          <a class="btn btn-sm btn-danger rounded-pill" role="button" (click)="openRejectionContent()">Reject this
+            Application
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-auto">
+      <app-update-user [userid]="candidateUser.id"></app-update-user>
+    </div>
+  </div>
+
+  <div *ngIf="tabNumber === 2">
+    <app-initial-assessment (initialAssessmentValue)="initialAssessmentValue($event)"></app-initial-assessment>
+  </div>
+
+  <div *ngIf="tabNumber === 3">
+    <app-schedule-interview [candidateJobId]="candidateJob?.id" [userName]="candidateUser.fullName"
+                            [interviewers]="interviewers"
+                            (interviewScheduleValue)="interviewScheduleValue($event)"></app-schedule-interview>
+  </div>
+  <div *ngIf="tabNumber === 4">
+    <app-final-review [candidateJobId]="candidateJob?.id" [userName]="candidateUser.fullName"
+                      (finalReviewValue)="finalReviewValue($event)"></app-final-review>
+  </div>
+
+</div>
+
+
+<ng-template #rejectionContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Are you sure you want to reject this candidate
+      ?: {{candidateJob?.userEntity?.fullName}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <div class="text-center">
+      <div *ngIf="modalResponseMessage && modalResponseMessage.length > 0" class="alert"
+           [ngClass]="hasError? 'alert-danger': 'alert-primary' " role="alert">
+        {{modalResponseMessage}}
+      </div>
+    </div>
+
+    <p class="p-1">Name: {{candidateJob?.userEntity?.fullName}} <br/>
+      Email: {{candidateJob?.userEntity?.email}} <br/>
+      Applied Position: {{candidateJob?.job.title}}</p>
+
+    <hr/>
+
+    <div>
+      <label class="p-1">Type candidate full name to confirm</label>
+      <input type="text" class="form-control" placeholder="Candidate name" [(ngModel)]="rejectedCandidateName"
+             [ngModelOptions]="{standalone: true}">
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger"
+            [disabled]="candidateJob?.userEntity?.fullName !== rejectedCandidateName || isLoading"
+            (click)="submitRejectApplication()">Reject this application
+      <app-loading *ngIf="isLoading" [repeat]="3"></app-loading>
+    </button>
+  </div>
+
+</ng-template>
