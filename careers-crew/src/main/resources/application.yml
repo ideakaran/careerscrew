@@ -1,0 +1,91 @@
+server:
+  port: 8080
+  servlet:
+    session:
+      timeout: 1d
+      cookie:
+        http-only: true
+
+# jdbc and jpa config
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/cr?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
+    username: root
+    password: root
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        jdbc:
+          time_zone: UTC
+
+  # Mail Config
+  mail:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: 'true'
+          timeout: '5000'
+          auth: 'true'
+          connectiontimeout: '5000'
+          writetimeout: '5000'
+    host: smtp.gmail.com
+    username:
+    password:
+    port: '587'
+
+  # freemarker config - used for email templates
+  freemarker:
+    template-loader-path: classpath:/mail-templates
+    suffix: .ftlh
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+
+#  jackson:
+#    date-format: java.text.SimpleDateFormat
+#    time-zone: UTC
+
+#  mvc:
+#    format:
+#      date-time: yyyy-MM-dd HH:mm:ss
+
+# logging config
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        web: DEBUG
+        security: DEBUG
+
+
+# App Custom Properties
+myapp:
+
+  companyBrandName: Careers Crew
+  frontSite: http://localhost:4200
+
+  mail:
+    defaultEmailAddress: hr.abc@gmail.com
+    verificationCodeExpirationSeconds: 3600 # 1 hour
+
+  cors:
+    allowedOrigins: http://localhost:8080,http://localhost:4200   # e.g: *
+
+  defaults:
+    initialAdminName: Test Admin
+    initialAdminEmail: admin@gmail.com
+    initialAdminPass: admin
+
+    resumeMaxFileSize: 2 # 2 MB
+    resumeFileSupportedTypes: .pdf, .doc, .docx
+    probationCompletionDays: 1
